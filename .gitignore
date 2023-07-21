@@ -56,6 +56,5 @@ jspm_packages/
 
 # Compiled
 
-dist/
 reference/
 storybook-static/
