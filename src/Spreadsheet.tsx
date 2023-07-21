@@ -36,6 +36,7 @@ import reducer, { INITIAL_STATE, hasKeyDownHandler } from "./reducer";
 import context from "./context";
 import "./Spreadsheet.css";
 import { Model } from "./engine";
+import {useEffect} from "react";
 
 /** The Spreadsheet component props */
 export type Props<CellType extends Types.CellBase> = {
@@ -102,6 +103,8 @@ export type Props<CellType extends Types.CellBase> = {
     nextCell: null | CellType,
     coords: null | Point.Point
   ) => void;
+
+  dirtyFlag: any
 };
 
 /**
@@ -129,6 +132,7 @@ const Spreadsheet = <CellType extends Types.CellBase>(
     onActivate = () => {},
     onBlur = () => {},
     onCellCommit = () => {},
+    dirtyFlag = 0
   } = props;
   const initialState = React.useMemo(() => {
     const model = new Model(props.data);
@@ -143,6 +147,16 @@ const Spreadsheet = <CellType extends Types.CellBase>(
     initialState
   );
   const [state, dispatch] = reducerElements;
+
+  // dispatch all
+  useEffect(() => {
+    for (let i=0; i<props.data.length; i++) {
+      for (let j=0; j<props.data[0].length; j++) {
+        // @ts-ignore
+        dispatch(Actions.setCellData({row: i, column: j}, props.data[i][j]))
+      }
+    }
+  }, [dirtyFlag])
 
   const size = React.useMemo(() => {
     return calculateSpreadsheetSize(state.model.data, rowLabels, columnLabels);
