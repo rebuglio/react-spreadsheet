@@ -154,6 +154,7 @@ const Spreadsheet = <CellType extends Types.CellBase>(
       for (let j=0; j<props.data[0].length; j++) {
         // @ts-ignore
         props.data[i][j] && dispatch(Actions.setCellData({row: i, column: j},
+            // @ts-ignore
             {value: props.data[i][j].value}
         ))
       }

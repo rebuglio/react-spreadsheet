@@ -2322,7 +2322,9 @@ var Spreadsheet = function (props) {
         for (var i = 0; i < props.data.length; i++) {
             for (var j = 0; j < props.data[0].length; j++) {
                 // @ts-ignore
-                dispatch(setCellData({ row: i, column: j }, props.data[i][j]));
+                props.data[i][j] && dispatch(setCellData({ row: i, column: j }, 
+                // @ts-ignore
+                { value: props.data[i][j].value }));
             }
         }
     }, [dirtyFlag]);
