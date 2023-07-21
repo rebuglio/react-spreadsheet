@@ -68,7 +68,10 @@ export const DarkMode: StoryFn<Props<StringCell>> = (props) => (
 );
 
 export const Controlled: StoryFn<Props<StringCell>> = (props) => {
-  const [data, setData] = React.useState(EMPTY_DATA);
+  const [data, setData] = React.useState([
+    [{ value: "Vanilla" }, { value: "Chocolate" }],
+    [{ value: "Strawberry" }, { value: "=a1" }],
+  ]);
 
   const addColumn = React.useCallback(
     () =>
